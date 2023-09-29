@@ -13,7 +13,9 @@ public class Receipt {
     private List<Item> items = new ArrayList<>();
     private String total;
 
-    public Receipt() {}
+    public Receipt() {
+
+    }
 
     public Receipt(UUID id, String retailer, String purchaseDate, String purchaseTime, List<Item> items, String total) {
         this.id = id;

@@ -32,7 +32,7 @@ class TestReceiptService {
         List<Receipt.Item> items = Arrays.asList(
                 new Receipt.Item("socks", 10.00),  // 0 points)
                 new Receipt.Item("hat", 15.00) // 3 points
-        ); // Total = 5 points for items count
+        ); // 5 points for items count
 
         receipt.setItems(items);
 

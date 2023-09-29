@@ -13,6 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class ReceiptService {
     // Using ConcurrentHashMap to store receipt ID and its corresponding points.
+    // ConcurrentHashMap chosen here under the assumption that this will eventually be a high load production environment API
     private final Map<UUID, Integer> pointsStorage = new ConcurrentHashMap<>();
 
     public UUID processReceipt(Receipt receipt) {

@@ -19,7 +19,6 @@ public class ReceiptProcessingSteps {
 
     @Autowired
     private ReceiptService receiptService;
-
     private Receipt receipt;
     private UUID receiptId;
 
@@ -45,7 +44,9 @@ public class ReceiptProcessingSteps {
         // Assuming the first row is a header row, skip it
         for (int i = 1; i < table.size(); i++) {
             List<String> row = table.get(i);
-            if (row.size() < 2) { continue; }
+            if (row.size() < 2) {
+                continue;
+            }
             String description = row.get(0);
             String priceStr = row.get(1);
 
@@ -76,7 +77,7 @@ public class ReceiptProcessingSteps {
     @Then("the total points should be {string}")
     public void totalPoints(String expectedPoints) {
         Optional<Integer> pointsOptional = receiptService.findPointsById(receiptId);
-        if(pointsOptional.isPresent()){
+        if (pointsOptional.isPresent()) {
             assertEquals(Integer.parseInt(expectedPoints), pointsOptional.get().intValue());
         } else {
             throw new AssertionError("No points found for given receipt ID.");

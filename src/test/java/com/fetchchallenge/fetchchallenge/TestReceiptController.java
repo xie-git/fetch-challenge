@@ -37,8 +37,6 @@ public class TestReceiptController {
     public void setUp() throws Exception {
         MockitoAnnotations.openMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(receiptController).build();
-
-        // Read content of morning-receipt.json
         sampleJSON = new String(Files.readAllBytes(Paths.get("src/test/resources/morning-receipt.json")));
     }
 
