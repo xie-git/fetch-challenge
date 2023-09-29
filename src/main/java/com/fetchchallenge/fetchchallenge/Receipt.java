@@ -1,5 +1,6 @@
 package com.fetchchallenge.fetchchallenge;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -9,7 +10,7 @@ public class Receipt {
     private String retailer;
     private String purchaseDate;
     private String purchaseTime;
-    private List<Item> items;
+    private List<Item> items = new ArrayList<>();
     private String total;
 
     public Receipt() {}
