@@ -1,37 +1,54 @@
 package com.fetchchallenge.fetchchallenge;
 
+import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Entity
+@Table(name = "receipts")
 public class Receipt {
 
-    private UUID id;
+    @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "ID", updatable = false, nullable = false)
+    private UUID receipt_id;
+    @Column(name = "RETAILER")
     private String retailer;
+    @Column(name = "PURCHASEDATE")
     private String purchaseDate;
+    @Column(name = "PURCHASETIME")
     private String purchaseTime;
+    @OneToMany(mappedBy = "receipt", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Item> items = new ArrayList<>();
+    @Column(name = "TOTAL")
     private String total;
 
     public Receipt() {
 
     }
 
-    public Receipt(UUID id, String retailer, String purchaseDate, String purchaseTime, List<Item> items, String total) {
-        this.id = id;
+
+    public Receipt(UUID receipt_id, String retailer, String purchaseDate, String purchaseTime, String total) {
+        this.receipt_id = receipt_id;
         this.retailer = retailer;
         this.purchaseDate = purchaseDate;
         this.purchaseTime = purchaseTime;
-        this.items = items;
         this.total = total;
     }
 
     public UUID getId() {
-        return id;
+        return receipt_id;
     }
 
     public void setId(UUID id) {
-        this.id = id;
+        this.receipt_id = id;
     }
 
     public String getRetailer() {
@@ -58,14 +75,6 @@ public class Receipt {
         this.purchaseTime = purchaseTime;
     }
 
-    public List<Item> getItems() {
-        return items;
-    }
-
-    public void setItems(List<Item> items) {
-        this.items = items;
-    }
-
     public String getTotal() {
         return total;
     }
@@ -74,36 +83,11 @@ public class Receipt {
         this.total = total;
     }
 
-    public static class Item {
-        private String shortDescription;
-        private Double price;
+    public List<Item> getItems() {
+        return items;
+    }
 
-        // Default constructor
-        public Item() {
-        }
-
-        // Parameterized constructor
-        public Item(String shortDescription, Double price) {
-            this.shortDescription = shortDescription;
-            this.price = price;
-        }
-
-        // Getters and setters
-
-        public String getShortDescription() {
-            return shortDescription;
-        }
-
-        public void setShortDescription(String shortDescription) {
-            this.shortDescription = shortDescription;
-        }
-
-        public Double getPrice() {
-            return price;
-        }
-
-        public void setPrice(Double price) {
-            this.price = price;
-        }
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 }

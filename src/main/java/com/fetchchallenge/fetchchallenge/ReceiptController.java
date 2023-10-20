@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 
 @RestController
@@ -21,6 +19,26 @@ public class ReceiptController {
 
     @Autowired
     private ReceiptService receiptService;
+
+    @Autowired
+    private ReceiptRepository receiptRepository;
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Receipt>> getAllReceipts() {
+        Iterable<Receipt> receipts = this.receiptRepository.findAll();
+        List<Receipt> receiptList = new ArrayList<>();
+        receipts.forEach(receiptList::add);
+        return ResponseEntity.ok(receiptList);
+    }
+
+    @PostMapping("/addReceipt")
+    public ResponseEntity<Receipt> addReceipt(@RequestBody Receipt receipt) {
+        for (Item item : receipt.getItems()) {
+            item.setReceipt(receipt);
+        }
+        Receipt savedReceipt = this.receiptRepository.save(receipt);
+        return ResponseEntity.ok(savedReceipt);
+    }
 
     @PostMapping("/process")
     public ResponseEntity<?> processReceipt(@RequestBody Receipt receipt) {
